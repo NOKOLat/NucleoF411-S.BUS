@@ -43,11 +43,16 @@ public:
 		return data[channel-1];
 	}
 
+	constexpr uint8_t getDataLen(){
+		return length;
+	}
+
 private:
 	std::array<uint8_t,25> receiveBuffer;
 	std::array<uint16_t,18> data;
 	bool isDecoded;
 	UART_HandleTypeDef *husart_;
+	const uint8_t length = 25;
 
 	void decodeSbus(){
 		data[0] = receiveBuffer[1];
