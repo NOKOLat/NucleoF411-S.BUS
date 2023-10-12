@@ -19,7 +19,7 @@ void loop(void);
 
 void debug();
 
-void sbusReceiveCallback(DMA_HandleTypeDef *_hdma);
+//void sbusReceiveCallback(DMA_HandleTypeDef *_hdma);
 
 #ifdef __cplusplus
 };
