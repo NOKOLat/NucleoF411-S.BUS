@@ -9,6 +9,7 @@
 /* Pre-Processor Begin */
 #include "SBUS.hpp"
 #include <functional>
+#include <string>
 
 #include <usart.h>
 #include <gpio.h>
@@ -42,6 +43,19 @@ void loop(void){
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
     HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
-    HAL_UART_Receive_DMA(&huart1, sbus.getReceveBufferPtr(),sbus.getDataLen());
+    sbus.setIsNeedParse();
+
+	std::string str;
+//    for(uint8_t n=0; n<25; n++){
+//    	str = std::to_string(*(sbus.getReceveBufferPtr()+n)) + " ";
+	for(uint8_t n=0; n<18; n++){
+		str = std::to_string(sbus.getData(n+1)) + " ";
+    	HAL_UART_Transmit(&huart2, (uint8_t *)str.c_str(), str.length(), 10);
+    }
+	str = "\n";
+	HAL_UART_Transmit(&huart2, (uint8_t *)str.c_str(), str.length(), 10);
+
+	HAL_UART_Receive_DMA(&huart1, sbus.getReceveBufferPtr(),sbus.getDataLen());
+
 }
 /* Function Body Begin */
