@@ -65,6 +65,6 @@ void SBUS::parse(){
 		data[16] = receiveBuffer[23] &0b1;
 		data[17] = receiveBuffer[23] &0b10;
 
-		isNeedParse = false;
+		needParse = false;
 	}
 }

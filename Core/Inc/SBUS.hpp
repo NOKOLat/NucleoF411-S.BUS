@@ -25,18 +25,18 @@ public:
 		return receiveBuffer.cbegin();
 	}
 
-	void enableReciveIT(){
-		isNeedParse = true;
-		HAL_UART_Receive_IT(husart_, receiveBuffer.data(), 25);
-	}
-
 	uint8_t *getReceveBufferPtr() {
 		return (uint8_t*)receiveBuffer.data();
 	}
 
+	void enableReciveIT(){
+		needParse = true;
+		HAL_UART_Receive_IT(husart_, receiveBuffer.data(), 25);
+	}
+
 	int16_t getData(const uint8_t channel){
-		if(channel > 17 or channel < 1) return -1;
-		if(isNeedParse){
+		if(channel > 18 or channel < 1) return -1;
+		if(needParse){
 			parse();
 		}
 
@@ -47,14 +47,14 @@ public:
 		return length;
 	}
 
-	void setIsNeedParse(bool arg=true){
-		isNeedParse = arg;
+	void setNeedParse(bool arg=true){
+		needParse = arg;
 	}
 
 private:
 	std::array<uint8_t,25> receiveBuffer;
 	std::array<uint16_t,18> data;
-	bool isNeedParse;
+	bool needParse;
 	UART_HandleTypeDef *husart_;
 	const uint8_t length = 25;
 
